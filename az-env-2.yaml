@@ -1,0 +1,27 @@
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+- stage: CI
+  displayName: CI Stage
+  jobs:
+  - job: build
+    displayName: Build  
+    steps:
+    - script: echo This-is-a-BUILD job
+      displayName: - 'Build project'
+
+- stage: CD
+  displayName: CD Stage
+  jobs:
+  - deployment: deploy
+    displayName: Deploy
+    environment: Staging
+    strategy:
+      runonce:
+        deploy:
+          steps:
+          - script: echo This is a DEPLOYMENT job
+            displayname: 'Deploy project'
